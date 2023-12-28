@@ -12,10 +12,7 @@ defmodule ChatWeb.PageLive do
 
   @impl true
   def handle_event("validate", %{"room_name" => room_name}, socket) do
-    form = %{
-      room_name: room_name
-    } |> to_form()
-
+    form = %{room_name: room_name} |> to_form()
     {:noreply, assign(socket, form: form)}
   end
 

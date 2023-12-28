@@ -19,6 +19,15 @@ config :chat, ChatWeb.Endpoint,
     esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
   ]
 
+config :chat, Chat.Repo,
+  username: "root",
+  password: "",
+  hostname: "localhost",
+  database: "chat_storm_dev",
+  stacktrace: true,
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed
