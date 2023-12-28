@@ -35,7 +35,7 @@ defmodule ChatWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {ChatWeb.LayoutView, "live.html"}
+        layout: {ChatWeb.Layouts, :app}
 
       unquote(html_helpers())
     end

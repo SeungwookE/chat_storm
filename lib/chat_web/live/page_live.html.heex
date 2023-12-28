@@ -1,1 +1,14 @@
-<button phx-click="random-room" title="Create a random room">Create a random room</button>
+<ul>
+  <div>Topic List</div>
+</ul>
+<script>
+  window.getRoomName = function() {
+    return document.querySelector("[phx-value-room_name]").value
+  }
+</script>
+<div>
+  <.form for={@form} phx-change="validate" phx-submit="create">
+    <.input type="text" field={@form[:room_name]}/>
+    <.button>Create Room</.button>
+  </.form>
+</div>
