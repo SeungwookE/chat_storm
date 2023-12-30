@@ -1,11 +1,4 @@
-<ul>
-  <div>Topic List</div>
-</ul>
-<script>
-  window.getRoomName = function() {
-    return document.querySelector("[phx-value-room_name]").value
-  }
-</script>
+<div>Topic List</div>
 <div>
   <.form for={@form} phx-change="validate" phx-submit="create">
     <.input type="text" field={@form[:room_name]}/>

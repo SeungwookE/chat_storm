@@ -1,14 +1,19 @@
 defmodule ChatWeb.PageLive do
   use ChatWeb, :live_view
 
+  alias Chat.Room
+  alias Chat.Repo
+
   require Logger
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, query: "", results: %{}, form: to_form(%{}))}
+    room_list = Room |> Repo.all() |> Enum.map(fn room -> room.name end)
+    Logger.info("room_list: #{inspect(room_list)}")
+    {:ok, assign(socket, room_list: room_list)}
   end
 
-  # handle_params, render functions omitted
+  # render functions omitted
 
   @impl true
   def handle_event("validate", %{"room_name" => room_name}, socket) do
@@ -18,7 +23,10 @@ defmodule ChatWeb.PageLive do
 
   @impl true
   def handle_event("create", params, socket) do
-    Logger.info("INSPECT params: #{inspect(params)})}")
+    # store the room in the database
+    %Room{name: params["room_name"]}
+    |> Repo.insert()
+
     room_url = "/" <> params["room_name"]
     {:noreply, push_redirect(socket, to: room_url)}
   end

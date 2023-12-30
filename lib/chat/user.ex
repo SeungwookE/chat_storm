@@ -14,7 +14,7 @@ defmodule Chat.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :roll, :level, :password])
-    |> validate_required([:name, :roll, :level, :password])
+    |> cast(attrs, [:name, :roll, :level])
+    |> validate_required([:name, :roll, :level])
   end
 end

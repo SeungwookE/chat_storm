@@ -17,6 +17,6 @@ defmodule Chat.Room do
   def changeset(room, attrs) do
     room
     |> cast(attrs, [:name, :team_only, :room_code, :is_private])
-    |> validate_required([:name, :team_only, :room_code, :is_private])
+    |> validate_required([:name])
   end
 end
