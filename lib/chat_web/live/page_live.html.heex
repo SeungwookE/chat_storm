@@ -1,4 +1,8 @@
-<div>Topic List</div>
+<.header>Topic List</.header>
+<.table id="rooms" rows={Repo.all(Room)}>
+  <:col :let={room} label="roomname"><a href="/{room.name}"><%= room.name %></a></:col>
+</.table>
+
 <div>
   <.form for={@form} phx-change="validate" phx-submit="create">
     <.input type="text" field={@form[:room_name]}/>

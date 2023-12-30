@@ -7,6 +7,12 @@
 # General application configuration
 import Config
 
+config :chat, Chat.Repo,
+  database: "chat_storm_dev",
+  username: "root",
+  password: "",
+  hostname: "localhost"
+
 config :chat,
   ecto_repos: [Chat.Repo],
   generators: [timestamp_type: :utc_datetime]

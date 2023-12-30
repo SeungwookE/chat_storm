@@ -9,8 +9,7 @@ defmodule ChatWeb.PageLive do
   @impl true
   def mount(_params, _session, socket) do
     room_list = Room |> Repo.all() |> Enum.map(fn room -> room.name end)
-    Logger.info("room_list: #{inspect(room_list)}")
-    {:ok, assign(socket, room_list: room_list)}
+    {:ok, assign(socket, query: "", results: %{room_list: room_list}, form: to_form(%{}))}
   end
 
   # render functions omitted
@@ -24,10 +23,15 @@ defmodule ChatWeb.PageLive do
   @impl true
   def handle_event("create", params, socket) do
     # store the room in the database
-    %Room{name: params["room_name"]}
-    |> Repo.insert()
-
-    room_url = "/" <> params["room_name"]
-    {:noreply, push_redirect(socket, to: room_url)}
+    Room.create_room(params["room_name"])
+    |> case do
+      {:ok, room} ->
+        Logger.info("Room #{room.name} created successfully")
+        room_url = "/" <> params["room_name"]
+        {:noreply, push_redirect(socket, to: room_url)}
+      {:error, changeset} ->
+        Logger.info("Room #{params["room_name"]} could not be created")
+        {:noreply, assign(socket, form: to_form(changeset), errors: changeset.errors)}
+    end
   end
 end

@@ -10,6 +10,7 @@ defmodule Chat.Application do
     children = [
       # Start the Telemetry supervisor
       ChatWeb.Telemetry,
+      Chat.Repo,
       # Start the PubSub system
       {Phoenix.PubSub, name: Chat.PubSub},
       # Start the Endpoint (http/https)
