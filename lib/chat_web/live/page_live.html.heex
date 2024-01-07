@@ -1,11 +1,36 @@
-<.header>Topic List</.header>
-<.table id="rooms" rows={Repo.all(Room)}>
-  <:col :let={room} label="roomname"><a href="/{room.name}"><%= room.name %></a></:col>
-</.table>
+<table>
+  <tr><th>Room List</th></tr>
+  <%= for room <- @rooms do %>
+    <tr>
+      <td>
+        <a href="#" phx-click="join_room" phx-value-room_name={room}><%= room %></a>
+      </td>
+    </tr>
+  <% end %>
+</table>
 
 <div>
   <.form for={@form} phx-change="validate" phx-submit="create">
-    <.input type="text" field={@form[:room_name]}/>
-    <.button>Create Room</.button>
+    <div class="grid grid-cols-4 gap-4 py-7">
+      <div class="col-span-1"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-2 rounded">Create Room</button></div>
+      <div class="col-span-3"><.input type="text" field={@form[:room_name]}/></div>
+    </div>
   </.form>
 </div>
+<style>
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+</style>

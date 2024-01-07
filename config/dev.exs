@@ -16,7 +16,8 @@ config :chat, ChatWeb.Endpoint,
   secret_key_base: "GLinuTjg8tH5d7RcwO/ABxddfc4+EwrF8w2svs7e6iWLKNmf3o+i4i6xrEfDMu39",
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
 
 config :chat, Chat.Repo,
