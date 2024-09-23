@@ -7,7 +7,13 @@
         <% end %>
     </div>
 
+
     <%= f = form_for :chat, "#", id: "chat-form", phx_submit: :submit_message, phx_change: :form_update %>
         <%= text_input f, :message, value: @message, placeholder: "Enter your message..." %>
     </form>
+
+    <.form for={@form} phx-change="validate" phx-submit="save">
+        <.input type="text" />
+    <button>Save</button>
+</.form>
 </div>

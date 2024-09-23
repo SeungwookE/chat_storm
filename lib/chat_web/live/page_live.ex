@@ -9,7 +9,7 @@ defmodule ChatWeb.PageLive do
   @impl true
   @spec mount(any, any, any) :: {:ok, any}
   def mount(_params, _session, socket) do
-    room_list = Room |> Repo.all() |> Enum.map(fn room -> room.name end)
+    room_list = Room |> Repo.all()
     Logger.info("Room list: #{inspect(room_list)}")
     {:ok, assign(socket, rooms: room_list, query: "", results: %{}, form: to_form(%{}))}
   end

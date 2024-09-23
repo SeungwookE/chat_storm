@@ -20,17 +20,17 @@ defmodule Chat.Room do
   def changeset(room, attrs) do
     room
     |> cast(attrs, [:name, :team_only, :room_code, :is_private])
-    |> validate_required([:name])
+    |> IO.inspect()
+    |> validate_required([:id, :name])
     |> validate_length(:name, min: 1, max: 15)
   end
 
   def create_room(room_name) do
     # 1. create a struct
-    room = %Room{}
-
     # 2. create a changeset from struct
     # 3. insert data
-    changeset(room, %{name: room_name})
+    %Room{}
+    |> changeset(%{name: room_name})
     |> Repo.insert()
   end
 end
