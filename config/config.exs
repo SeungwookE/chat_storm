@@ -21,7 +21,11 @@ config :chat,
 config :chat, ChatWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Phoenix.Endpoint.Cowboy2Adapter,
-  render_errors: [view: ChatWeb.ErrorView, accepts: ~w(html json), layout: false],
+  render_errors: [
+    formats: [html: ChatWeb.ErrorHTML, json: ChatWeb.ErrorJSON],
+    root_layout: {ChatWeb.ErrorHTML, :root},
+    layout: false
+  ],
   pubsub_server: Chat.PubSub,
   live_view: [signing_salt: "OEcjCPho"]
 

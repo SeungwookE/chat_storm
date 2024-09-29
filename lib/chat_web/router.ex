@@ -10,6 +10,16 @@ defmodule ChatWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :cs_room do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_live_flash
+    plug :put_root_layout, {ChatWeb.Layouts, :root}
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+    # plug ChatWeb.ValidateRoom
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -18,10 +28,15 @@ defmodule ChatWeb.Router do
     pipe_through :browser
 
     live "/", PageLive
-    live "/room/:id", RoomLive
 
-    get "/hello", HelloController, :index
-    # get "/", PageController, :index
+    # get "/hello", HelloController, :index
+    get "/room/:room_id", PageController, :join_room
+  end
+
+  scope "/room/live", ChatWeb do
+    pipe_through :cs_room
+
+    live "/:id", RoomLive
   end
 
   # Other scopes may use custom stacks.

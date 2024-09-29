@@ -12,7 +12,7 @@ config :chat, ChatWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4000],
   check_origin: false,
   code_reloader: true,
-  debug_errors: true,
+  debug_errors: false,
   secret_key_base: "GLinuTjg8tH5d7RcwO/ABxddfc4+EwrF8w2svs7e6iWLKNmf3o+i4i6xrEfDMu39",
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)

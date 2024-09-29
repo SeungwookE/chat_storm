@@ -94,6 +94,7 @@ defmodule ChatWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import ChatWeb.CoreComponents
+      import ChatWeb.PageComponents
       import ChatWeb.Gettext
 
       # Shortcut for generating JS commands

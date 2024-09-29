@@ -4,15 +4,19 @@ defmodule ChatWeb.RoomLive do
 
   import Phoenix.HTML.Form
 
+  alias Chat.Repo
+  alias Chat.Room
+
   @impl true
   def mount(%{"id" => room_id}, _session, socket) do
-    topic = "room:" <> room_id
+    room = Repo.get(Room, room_id)
+    topic = "room:" <> room.name
     username = MnemonicSlugs.generate_slug(2)
     if connected?(socket), do: ChatWeb.Endpoint.subscribe(topic)
 
     {:ok,
       assign(socket,
-        room_id: room_id,
+        room_name: room.name,
         topic: topic,
         username: username,
         message: "",

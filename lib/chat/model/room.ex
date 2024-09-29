@@ -20,9 +20,8 @@ defmodule Chat.Room do
   def changeset(room, attrs) do
     room
     |> cast(attrs, [:name, :team_only, :room_code, :is_private])
-    |> IO.inspect()
-    |> validate_required([:id, :name])
-    |> validate_length(:name, min: 1, max: 15)
+    |> validate_required([:name])
+    |> validate_length(:name, min: 1, max: 20)
   end
 
   def create_room(room_name) do

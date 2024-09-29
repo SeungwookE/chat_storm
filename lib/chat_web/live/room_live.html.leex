@@ -1,5 +1,5 @@
-<p>Currently chatting in <strong><%= @room_id %></strong> as <strong><%=@username%></strong></p>
-
+<div>Currently chatting in <strong><%= @room_name %></strong> as <strong><%=@username%></strong></div>
+<br>
 <div id="chat-container">
     <div id="chat-messages">
         <%= for message <- @messages do %>
@@ -15,5 +15,5 @@
     <.form for={@form} phx-change="validate" phx-submit="save">
         <.input type="text" />
     <button>Save</button>
-</.form>
+    </.form>
 </div>

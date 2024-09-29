@@ -1,16 +1,14 @@
 <table>
   <tr><th>Room List</th></tr>
-  <%= for room <- @rooms do %>
-    <tr>
-      <td>
-        <a href="#" phx-click="join_room" phx-value-room_name={room}><%= room %></a>
-      </td>
-    </tr>
-  <% end %>
+  <tr :for={room <- @rooms}>
+    <td>
+      <a href="#" phx-click="join_room" phx-value-room_id={room.id}><%= room.name %></a>
+    </td>
+  </tr>
 </table>
 
 <div>
-  <.form for={@form} phx-change="validate" phx-submit="create">
+  <.form for={@form} phx-submit="create">
     <div class="grid grid-cols-4 gap-4 py-7">
       <div class="col-span-1"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-2 rounded">Create Room</button></div>
       <div class="col-span-3"><.input type="text" field={@form[:room_name]}/></div>

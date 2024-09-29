@@ -5,7 +5,7 @@ defmodule ChatWeb.ErrorHTML do
   # uncomment the embed_templates/1 call below
   # and add pages to the error directory:
   #
-  #   * lib/nChatWeb_web/controllers/error_html/404.html.heex
+  #   * lib/ChatWeb_web/controllers/error_html/404.html.heex
   #   * lib/ChatWeb_web/controllers/error_html/500.html.heex
   #
   # embed_templates "error_html/*"
@@ -13,7 +13,11 @@ defmodule ChatWeb.ErrorHTML do
   # The default is to render a plain text page based on
   # the template name. For example, "404.html" becomes
   # "Not Found".
-  def render(template, _assigns) do
+
+  embed_templates "error_html/*"
+
+  def render(template, assigns) do
     Phoenix.Controller.status_message_from_template(template)
+    # apply(__MODULE__, :"500", [assigns])
   end
 end
