@@ -5,9 +5,9 @@ defmodule ChatWeb.PageComponents do
 
   def room_list(assigns) do
     ~H"""
-    <tr :for={room <- @rooms} >
+    <tr :for={room <- @room} >
       <td>
-        <a href="#" phx-click="join_room" ><%= room %></a>
+        <a href="#" phx-click="join_room" phx-value-room_name={room}><%= room %></a>
       </td>
     </tr>
     """

@@ -1,0 +1,18 @@
+<div>Currently chatting in <strong><%= @room_name %></strong> as <strong><%=@username%></strong></div>
+<br>
+<div id="chat-container">
+    <div id="chat-messages">
+        <%= for message <- @messages do %>
+            <p id={message.uuid}><%= message.content %></p>
+        <% end %>
+    </div>
+</div>
+<div id="chat-input-box">
+    <.form class="flex" for={@form}, phx-submit="submit_message">
+        <div class="flex-auto">
+            <%!-- <.input type="text" field={chat[:message]} placeholder="Type your message here" class="w-full border-2 border-gray-300 p-2 rounded" /> --%>
+            <.input field={@form[:message]} type="text" placeholder="Enter message" />
+        </div>
+        <div class="flex-none ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-2 rounded"><button>Send</button></div>
+    </.form>
+</div>
