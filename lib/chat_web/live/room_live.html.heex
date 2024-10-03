@@ -8,11 +8,19 @@
     </div>
 </div>
 <div id="chat-input-box">
-    <.form class="flex" for={@form}, phx-submit="submit_message">
+    <.form class="flex" for={@form} phx-submit="submit_message" phx-change="form_update">
         <div class="flex-auto">
-            <%!-- <.input type="text" field={chat[:message]} placeholder="Type your message here" class="w-full border-2 border-gray-300 p-2 rounded" /> --%>
-            <.input field={@form[:message]} type="text" placeholder="Enter message" />
+            <%!-- 1단 중첩은 ex 파일에서 :as 설정으로 :chat 하위에 데이터를 담도록 하는것이 가능. mount 함수 참조 --%>
+            <%!-- value attr을 통해 클라이언트단에 보여지는 메시지를 비우거나 보여주거나 할 수 있음.  --%>
+            <.input type="text" field={@form[:message]} value={@message} placeholder="Enter your message..." />
+        
+            <%!-- 2단 이상 중첩이 필요할 경우 아래의 inputs_for과 :let을 사용하는 방법으로 처리가능 --%>
+            <%!-- <.inputs_for :let={chat_f} field={@form[:chat]}>
+                <.input field={chat_f[:message]} placeholder="Enter your message..." />
+            </.inputs_for> --%>
         </div>
         <div class="flex-none ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-2 rounded"><button>Send</button></div>
     </.form>
+    <%!-- <div><%= @message %></div>
+    <pre><%= inspect(@form, pretty: true, limit: :infinity) %></pre> --%>
 </div>

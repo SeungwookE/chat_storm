@@ -20,6 +20,8 @@ config :chat, ChatWeb.Endpoint,
     tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
 
+config :phoenix_live_view, debug_heex_annotations: true
+
 config :chat, Chat.Repo,
   username: "root",
   password: "",
