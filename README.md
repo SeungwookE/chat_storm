@@ -1,4 +1,7 @@
-# Chat
+# ChatStorm
+
+## Overview
+ChatStorm is Phoenix Liveview bases realtime chatting app. 
 
 To start your Phoenix server:
 
