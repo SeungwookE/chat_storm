@@ -1,4 +1,16 @@
 <table>
+    <%= if @username == "" do %>
+      <div class="flex flex-row-reverse">Set your name</div>
+      <div class="flex flex-row-reverse gap-1 py-3">
+        <.form for={@username_form} phx-submit="set_username">
+          <div><button class="bg-green-500 hover:bg-green-700 text-white py-2 px-2 mt-2 rounded">Regist</button></div>
+          <div><.input type="text" field={@username_form[:username]} placeholder="type your name.."/></div>
+        </.form>
+      </div>
+    <% else %>
+      <div class="flex flex-row-reverse gap-1 py-3">Your Name: <%= @username %></div>
+    <% end %>
+  
   <tr><th>Room List</th></tr>
   <tr :for={room <- @rooms}>
     <td>
@@ -8,13 +20,32 @@
 </table>
 
 <div>
-  <.form for={@form} phx-submit="create">
+  <.form for={@form} phx-submit="create_room">
     <div class="grid grid-cols-4 gap-4 py-7">
-      <div class="col-span-1"><button class="bg-blue-100 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-2 rounded">Create Room</button></div>
       <div class="col-span-3"><.input type="text" field={@form[:room_name]}/></div>
+      <div class="col-span-1"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-2 rounded">Create Room</button></div>
     </div>
   </.form>
 </div>
+<%!-- show 'no username' setup popup --%>
+<%= if @error == "no_username" do %>
+  <div id="error-popup" class="fixed inset-0 flex items-center justify-center">
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <p class="text-black-500">
+        You need to set your name first!
+      </p>
+      <br>
+      <button id="close-popup" phx-click="error_handle_done" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
+        Close
+      </button>
+    </div>
+  </div>
+<% end %>
+
+<%!-- Debug Info --%>
+<pre>username: <%= inspect(@username)%></pre>
+<pre>error: <%= inspect(@error) %></pre>
+
 <style>
   table {
     font-family: arial, sans-serif;

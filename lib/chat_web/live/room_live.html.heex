@@ -1,9 +1,13 @@
 <div>Currently chatting in <strong><%= @room_name %></strong> as <strong><%=@username%></strong></div>
 <br>
 <div id="chat-container">
-    <div id="chat-messages">
-        <%= for message <- @messages do %>
-            <p id={message.uuid}><%= message.content %></p>
+    <div id="chat-messages" class="overflow-auto md:overflow-scroll relative">
+        <ChatWeb.RoomComponents.display_messages messages={@messages}/>
+    </div>
+    <div id="user-list">
+        <div class="font-bold my-2">Users online</div>
+        <%= for user <- @user_list do%>
+            <p><%= user %></p>
         <% end %>
     </div>
 </div>
@@ -24,3 +28,11 @@
     <%!-- <div><%= @message %></div>
     <pre><%= inspect(@form, pretty: true, limit: :infinity) %></pre> --%>
 </div>
+<script>
+    const chatBox = document.getElementById('chat-messages');
+
+    // Function to scroll the chat box to the bottom
+    function scrollToBottom() {
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+</script>

@@ -6,20 +6,32 @@
 
 #chat-container {
   display: flex;
-  border: 1px solid #cccccc;
-  border-radius: 15px;
   padding: 1em;
   margin: -1em 1em 1em -1em;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: space-between;
   height: 500px;
 }
 
+#chat-messages {
+  padding: 1em;
+  flex-grow: 1;
+  margin: -1em 1em 1em -1em;
+  border: 1px solid #cccccc;
+  border-radius: 15px;
+  overflow-y: auto;
+}
+
 #chat-input-box {
   display: flex;
-  margin: -1em 1em 1em -1em;
+  margin: -2em 1em 1em -1em;
   flex-direction: column;
   justify-content: space-between;
+}
+
+#user-list p {
+  margin: 0;
+  padding: 0;
 }
 
 /* Alerts and form errors used by phx.new */
