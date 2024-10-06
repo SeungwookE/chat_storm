@@ -47,13 +47,26 @@ defmodule ChatWeb.RoomLive do
 
   # phx-change will only can keep message value.
   def handle_event("form_update", %{"chat" => %{"message" => message}}, socket) do
-    # Logger.info(message: socket.assigns)
+    ChatWeb.Endpoint.broadcast(socket.assigns.topic, "someone-typing", %{username: socket.assigns.username})
     {:noreply, assign(socket, message: message)}
   end
 
+
+  #########################################################
+  #                   Custom Events                       #
+  #########################################################
   @impl true
   def handle_info(%{event: "new-message", payload: message}, socket) do
-    {:noreply, assign(socket, messages: socket.assigns.messages ++ [message])}
+    socket =
+      socket
+      |> assign(messages: socket.assigns.messages ++ [message])
+      |> push_event("new-message", %{}) # event to chat panel focus to be on bottom
+
+    {:noreply, socket}
+  end
+
+  def handle_info(%{event: "someone-typing", payload: %{username: username}}, socket) do
+    {:noreply, push_event(socket, "someone-typing", %{"username" => username})}
   end
 
   # Handling joined user list by the pubsub event from Presence module

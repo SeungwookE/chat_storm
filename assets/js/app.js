@@ -42,3 +42,26 @@ liveSocket.connect()
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
 
+/** Event Functions */
+const chatBox = document.getElementById('chat-messages');
+// Function to scroll the chat box to the bottom
+function scrollToBottom() {
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+// From push_event function invoked in the Liveview.
+window.addEventListener("phx:new-message", (e) => {
+  scrollToBottom();
+})
+
+window.addEventListener("phx:someone-typing", (e) => {
+  let username = e.detail.username;
+  const userCardDiv = document.getElementById(`${username}-card`);
+  // get second child of the chatSignDiv
+  const chatSign = userCardDiv.children[1].children[0];
+  // remove hidden class of chatSign for 2 seconds and then add it back
+  chatSign.classList.remove('hidden');
+  setTimeout(() => {
+    chatSign.classList.add('hidden');
+  }, 2000);  
+})
