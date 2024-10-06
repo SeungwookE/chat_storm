@@ -59,9 +59,11 @@ window.addEventListener("phx:someone-typing", (e) => {
   const userCardDiv = document.getElementById(`${username}-card`);
   // get second child of the chatSignDiv
   const chatSign = userCardDiv.children[1].children[0];
-  // remove hidden class of chatSign for 2 seconds and then add it back
-  chatSign.classList.remove('hidden');
-  setTimeout(() => {
-    chatSign.classList.add('hidden');
-  }, 2000);  
+  // remove hidden class of chatSign for 2 seconds and then add it back if hidden is enabled
+  if (chatSign.classList.contains('hidden')) {
+    chatSign.classList.remove('hidden');
+    setTimeout(() => {
+      chatSign.classList.add('hidden');
+    }, 2000);
+  }
 })

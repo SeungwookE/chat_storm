@@ -5,11 +5,6 @@ defmodule ChatWeb.RoomLive do
   alias Chat.Repo
   alias Chat.Room
 
-  # def mount(%{"room_id" => room_id, "username" => username}, _session, socket) do
-  #   IO.puts("INSPECT mount1 from #{username}")
-  #   {:ok, socket}
-  # end
-
   @impl true
   def mount(%{"room_id" => room_id, "username" => username} = _params, _session, socket) do
     room = Repo.get(Room, room_id)
