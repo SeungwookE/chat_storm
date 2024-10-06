@@ -1,15 +1,15 @@
 <div>Currently chatting in <strong><%= @room_name %></strong> as <strong><%=@username%></strong></div>
 <br>
 <div id="chat-container">
-    <div id="chat-messages" class="overflow-auto md:overflow-scroll relative">
+    <div id="chat-messages" class="overflow-auto md:overflow-scroll relative w-9/12">
         <ChatWeb.RoomComponents.display_messages messages={@messages} username={@username}/>
     </div>
-    <div id="user-list">
+    <div id="user-list" class="w-3/12">
         <div class="font-bold my-3">Users online</div>
         <%= for user <- @user_list do%>
             <div id={"#{user}-card"} class="flex my-1">
-                <p class="w-1/2 truncate "><%= user %></p>
-                <div class="w-1/2 my-0.5"><p class="hidden border-2 text-xs text-left text-zinc-500 border rounded-xl px-1 py-0.5">typing..</p></div>
+                <p class="w-1/2 truncate"><%= user %></p>
+                <div class="content-center"><p class="hidden border-2 text-xs text-left text-zinc-500 border rounded-xl px-1">typing..</p></div>
             </div>
         <% end %>
     </div>
