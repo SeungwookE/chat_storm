@@ -4,6 +4,7 @@ defmodule ChatWeb.RoomComponents do
   require Logger
 
   attr :messages, :any, required: false
+  attr :username, :string, required: true
   def display_messages(assigns) do
     ~H"""
       <%= for message <- @messages do %>
@@ -13,7 +14,11 @@ defmodule ChatWeb.RoomComponents do
           <% else %>
             <div class="text-sm text-zinc-500 my-1 font-extralight"><strong><%= message.username%></strong></div>
             <div class="px-2 flex">
-              <div class="px-2 py-0.5 border rounded-lg"><%= message.content %></div>
+              <%= if message.username == @username do %>
+                <div class="px-2 py-0.5 border-2 border-teal-400 rounded-lg bg-zinc-50"><%= message.content %></div>
+              <%= else %>
+                <div class="px-2 py-0.5 border-2 border-slate-300 rounded-lg"><%= message.content %></div>
+              <% end %>
             </div>
           <% end %>
         </p>

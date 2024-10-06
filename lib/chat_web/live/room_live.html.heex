@@ -2,7 +2,7 @@
 <br>
 <div id="chat-container">
     <div id="chat-messages" class="overflow-auto md:overflow-scroll relative">
-        <ChatWeb.RoomComponents.display_messages messages={@messages}/>
+        <ChatWeb.RoomComponents.display_messages messages={@messages} username={@username}/>
     </div>
     <div id="user-list">
         <div class="font-bold my-3">Users online</div>
