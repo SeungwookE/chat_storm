@@ -49,10 +49,10 @@ function scrollToBottom() {
     chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// // From push_event function invoked in the Liveview.
-// window.addEventListener("phx:new-message", (e) => {
-//   scrollToBottom();
-// })
+// From push_event function invoked in the Liveview.
+window.addEventListener("phx:new-message", (e) => {
+  scrollToBottom();
+})
 
 // window.addEventListener("phx:someone-typing", (e) => {
 //   let username = e.detail.username;
