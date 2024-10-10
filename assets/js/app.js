@@ -42,12 +42,12 @@ liveSocket.connect()
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
 
-// /** Event Functions */
-// const chatBox = document.getElementById('chat-messages');
-// // Function to scroll the chat box to the bottom
-// function scrollToBottom() {
-//     chatBox.scrollTop = chatBox.scrollHeight;
-// }
+/** Event Functions */
+const chatBox = document.getElementById('chat-messages');
+// Function to scroll the chat box to the bottom
+function scrollToBottom() {
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
 
 // // From push_event function invoked in the Liveview.
 // window.addEventListener("phx:new-message", (e) => {
