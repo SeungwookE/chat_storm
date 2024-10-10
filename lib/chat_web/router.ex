@@ -31,7 +31,7 @@ defmodule ChatWeb.Router do
   scope "/room/", ChatWeb do
     pipe_through :cs_room
     get "/:room_id", RoomController, :index
-    live "/live/:room_id", RoomLive
+    # live "/live/:room_id", RoomLive
   end
 
   # Other scopes may use custom stacks.

@@ -12,16 +12,16 @@ defmodule ChatWeb.RoomController do
     join_room(conn, params)
   end
 
-  def join_room(conn, %{"room_id" => room_id, "username" => username} = params) do
+  def join_room(conn, %{"room_id" => room_id, "username" => username} = _params) do
     with room <- Repo.get(Room, room_id),
       false <- username == "" do
         conn
         |> put_flash(:info, "You joined room #{room.name}")
-        |> redirect(to: "/room/live/#{room_id}?username=#{username}")
-        # |> Phoenix.LiveView.Controller.live_render(RoomLive, session: %{
-        #   "room_id" => room_id,
-        #   "username" => username
-        # })
+        |> Phoenix.LiveView.Controller.live_render(RoomLive, session: %{
+          "room_id" => room_id,
+          "username" => username
+        })
+        # |> redirect(to: "/room/live/#{room_id}?username=#{username}")
     else
       _ ->
         # render ErrorHTML error page

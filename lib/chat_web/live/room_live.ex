@@ -6,7 +6,7 @@ defmodule ChatWeb.RoomLive do
   alias Chat.Room
 
   @impl true
-  def mount(%{"room_id" => room_id, "username" => username} = _params, _session, socket) do
+  def mount(_params, %{"room_id" => room_id, "username" => username} = _session, socket) do
     room = Repo.get(Room, room_id)
     topic = "room:" <> room.name
     # IO.puts("INSPECT mount from #{username} | #{inspect(socket, pretty: true, limit: 1000)}")
