@@ -1,41 +1,41 @@
-<div>Currently chatting in <strong><%= @room_name %></strong> as <strong><%=@username%></strong></div>
-<br>
-<div id="chat-container">
-    <div id="chat-messages" class="overflow-auto md:overflow-scroll relative w-9/12">
-        <ChatWeb.RoomComponents.display_messages messages={@messages} username={@username}/>
-    </div>
-    <div id="user-list" class="w-3/12">
-        <div class="font-bold my-3">Users online</div>
-        <%= for user <- @user_list do%>
-            <div id={"#{user}-card"} class="flex my-1">
-                <p class="w-1/2 truncate"><%= user %></p>
-                <div class="content-center"><p class="hidden border-2 text-xs text-left text-zinc-500 border rounded-xl px-1">typing..</p></div>
-            </div>
-        <% end %>
-    </div>
-</div>
-<div id="chat-input-box">
-    <.form class="flex" for={@form} phx-submit="submit_message" phx-change="form_update">
-        <div class="flex-auto">
-            <%!-- 1단 중첩은 ex 파일에서 :as 설정으로 :chat 하위에 데이터를 담도록 하는것이 가능. mount 함수 참조 --%>
-            <%!-- value attr을 통해 클라이언트단에 보여지는 메시지를 비우거나 보여주거나 할 수 있음.  --%>
-            <.input type="text" field={@form[:message]} value={@message} placeholder="Enter your message..." />
-        
-            <%!-- 2단 이상 중첩이 필요할 경우 아래의 inputs_for과 :let을 사용하는 방법으로 처리가능 --%>
-            <%!-- <.inputs_for :let={chat_f} field={@form[:chat]}>
-                <.input field={chat_f[:message]} placeholder="Enter your message..." />
-            </.inputs_for> --%>
+<div class="flex flex-col h-screen">
+    <div>Currently chatting in <strong><%= @room_name %></strong> as <strong><%=@username%></strong></div>
+    <br>
+    <div id="chat-container">
+        <div id="chat-messages" class="overflow-auto md:overflow-scroll relative w-9/12">
+            <ChatWeb.RoomComponents.display_messages messages={@messages} username={@username}/>
         </div>
-        <div class="flex-none ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-2 rounded"><button>Send</button></div>
-    </.form>
-    <%!-- <div><%= @message %></div>
-    <pre><%= inspect(@form, pretty: true, limit: :infinity) %></pre> --%>
+        <div id="user-list" class="w-3/12">
+            <div class="font-bold my-3">Users online</div>
+            <%= for username <- @user_list do %>
+                <div id={"#{username}-card"} class="bg-white rounded-lg shadow-md p-2 flex items-center space-x-2">
+                    <span class="text-sm font-semibold"><%= username %></span>
+                    <%= if Map.has_key?(@typing_users, username) do %>
+                        <div class="text-xs text-gray-500">typing...</div>
+                    <% end %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+    <div id="chat-input-box">
+        <.form for={@form} phx-submit="submit_message" phx-change="form_update">
+            <div class="flex space-x-2">
+                <div class="w-9/12">
+                    <%!-- 1단 중첩은 ex 파일에서 :as 설정으로 :chat 하위에 데이터를 담도록 하는것이 가능. mount 함수 참조 --%>
+                    <%!-- value attr을 통해 클라이언트단에 보여지는 메시지를 비우거나 보여주거나 할 수 있음.  --%>
+                    <.input field={@form[:message]} value={@message} placeholder="Type a message..." class="flex-1" />
+                
+                    <%!-- 2단 이상 중첩이 필요할 경우 아래의 inputs_for과 :let을 사용하는 방법으로 처리가능 --%>
+                    <%!-- <.inputs_for :let={chat_f} field={@form[:chat]}>
+                        <.input field={chat_f[:message]} placeholder="Enter your message..." />
+                    </.inputs_for> --%>
+                </div>
+                <div class="flex-none bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 mt-2 rounded-lg">
+                    <button type="submit">Send</button>
+                </div>
+            </div>
+        </.form>
+    </div>
+        <%!-- <div><%= @message %></div>
+        <pre><%= inspect(@form, pretty: true, limit: :infinity) %></pre> --%>
 </div>
-<%!-- <script>
-    const chatBox = document.getElementById('chat-messages');
-    console.log("INSPECT:", chatBox.scrollHeight);
-    // Function to scroll the chat box to the bottom
-    function scrollToBottom() {
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
-</script> --%>

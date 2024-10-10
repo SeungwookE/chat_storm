@@ -28,7 +28,8 @@ defmodule ChatWeb.RoomLive do
         messages: [],
         user_list: [],
         temporary_assigns: [messages: []],
-        form: msg_input_form
+        form: msg_input_form,
+        typing_users: %{}  # Add this line to track typing users
       )}
   end
 
@@ -40,12 +41,16 @@ defmodule ChatWeb.RoomLive do
     {:noreply, assign(socket, message: "")}
   end
 
-  # phx-change will only can keep message value.
+  # Update this function
   def handle_event("form_update", %{"chat" => %{"message" => message}}, socket) do
-    ChatWeb.Endpoint.broadcast(socket.assigns.topic, "someone-typing", %{username: socket.assigns.username})
+    broadcast_user_typing(socket)
     {:noreply, assign(socket, message: message)}
   end
 
+  # Add this new function
+  defp broadcast_user_typing(socket) do
+    ChatWeb.Endpoint.broadcast_from(self(), socket.assigns.topic, "user_typing", %{username: socket.assigns.username})
+  end
 
   #########################################################
   #                   Custom Events                       #
@@ -60,8 +65,17 @@ defmodule ChatWeb.RoomLive do
     {:noreply, socket}
   end
 
-  def handle_info(%{event: "someone-typing", payload: %{username: username}}, socket) do
-    {:noreply, push_event(socket, "someone-typing", %{"username" => username})}
+  # Update this function
+  def handle_info(%{event: "user_typing", payload: %{username: username}}, socket) do
+    typing_users = Map.put(socket.assigns.typing_users, username, :os.system_time(:second))
+    Process.send_after(self(), {:clear_typing, username}, 3000)
+    {:noreply, assign(socket, typing_users: typing_users)}
+  end
+
+  # Add this new function
+  def handle_info({:clear_typing, username}, socket) do
+    typing_users = Map.delete(socket.assigns.typing_users, username)
+    {:noreply, assign(socket, typing_users: typing_users)}
   end
 
   # Handling joined user list by the pubsub event from Presence module
