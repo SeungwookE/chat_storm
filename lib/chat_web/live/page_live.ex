@@ -26,22 +26,28 @@ defmodule ChatWeb.PageLive do
     }
   end
 
-
-  def handle_event("set_username", %{"username" => username}, socket) do
-    Logger.info("Setting username to #{username}")
-    {:noreply, assign(socket, username: username, error: "")}
-  end
-
-  def handle_event("join_room", %{"room_id" => room_id}, socket) do
-    username = socket.assigns.username
+  def handle_event(
+    "join_room",
+    %{"room_id" => room_id},
+    %{assigns: %{username: username}} = socket
+  ) do
     case username do
       "" ->
         Logger.info("No username set")
-        {:noreply, assign(socket, error: "no_username")}
+        {:noreply, assign(
+          socket,
+          error: "no_username",
+          username_form: to_form(%{"username" => ""})
+        )}
       _ ->
         Logger.info("#{username} is joining the room:#{room_id}")
         {:noreply, push_redirect(socket, to: "/room/#{room_id}?username=#{username}")}
     end
+  end
+
+  def handle_event("set_username", %{"username" => username}, socket) do
+    Logger.info("Setting username to #{username}")
+    {:noreply, assign(socket, username: username, error: "")}
   end
 
   # @impl true
@@ -65,8 +71,7 @@ defmodule ChatWeb.PageLive do
     end
   end
 
-  def handle_event("error_handle_done", _params, socket) do
-    Logger.info("Error handling done: #{inspect(socket.assigns)}")
-    {:noreply, assign(socket, error: "")}
+  def handle_event("error_handle_done", %{"type" => "no_username"}, socket) do
+    {:noreply, assign(socket, error: "", username_form: to_form(%{}))}
   end
 end

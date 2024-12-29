@@ -12,11 +12,7 @@
     <% end %>
   
   <tr><th>Room List</th></tr>
-  <tr :for={room <- @rooms}>
-    <td>
-      <a href="#" phx-click="join_room" phx-value-room_id={room.id}><%= room.name %></a>
-    </td>
-  </tr>
+  <ChatWeb.PageComponents.room_list rooms={@rooms} />
 </table>
 
 <div>
@@ -35,7 +31,7 @@
         You need to set your name first!
       </p>
       <br>
-      <button id="close-popup" phx-click="error_handle_done" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
+      <button id="close-popup" phx-click="error_handle_done" phx-value-type="no_username" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
         Close
       </button>
     </div>

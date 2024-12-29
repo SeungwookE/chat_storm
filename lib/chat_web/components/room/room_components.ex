@@ -3,6 +3,7 @@ defmodule ChatWeb.RoomComponents do
 
   require Logger
 
+
   attr :messages, :any, required: false
   attr :username, :string, required: true
   def display_messages(assigns) do
